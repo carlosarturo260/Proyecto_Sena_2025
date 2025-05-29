@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Resultados de búsqueda – Tu Cancha App</title>
+
+  <!-- Estilos globales de la web + Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="recursos/styles.css" />
+</head>
+<body>
+  <!-- ░░ HEADER ░░ -->
+  <header class="bg-success text-white p-3">
+    <div class="container d-flex align-items-center">
+      <a href="index.html"><img src="images/logo.png" class="logo me-3" alt="Logo" /></a>
+      <h1 class="flex-grow-1 mb-0">Canchas encontradas</h1>
+    </div>
+  </header>
+
+  <!-- ░░ CONTENIDO ░░ -->
+  <main class="container my-5">
+    <!-- Botón de regresar -->
+    <div class="mb-4">
+      <a href="index.html" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left"></i> Regresar
+      </a>
+    </div>
+    
+    <h2 class="text-center text-white bg-success p-3 mb-4">Canchas encontradas</h2>
+    <div id="cards" class="row g-4"></div>
+  </main>
+
+  <!-- ░░ SCRIPTS ░░ -->
+  <!-- Lógica genérica de la app (login, helpers, etc.) -->
+  <script src="app.js"></script>
+
+  <!-- Lógica ESPECÍFICA de esta página -->
+  <script>
+    (async () => {
+      // 1️⃣ Leer parámetros de la URL
+      const qs   = new URLSearchParams(location.search);
+      const city = qs.get('city');     // Ciudad obligatoria
+      const id   = qs.get('nombre');   // ID de la cancha (opcional)
+      const date = qs.get('date');     // Fecha (opcional)
+      const time = qs.get('time');     // Hora  (opcional)
+
+      // Si no hay ciudad, volvemos al inicio
+      if (!city) {
+        alert('Falta la ciudad');
+        location.href = 'index.html';
+        return;
+      }
+
+      try {
+        // 2️⃣ Traer la lista de canchas
+        const res = await fetch('http://localhost:3000/api/canchas');
+        const all = await res.json();
+
+        // 3️⃣ Filtrar por ciudad o por ID (si llega nombre=ID)
+        const data = id
+          ? all.filter(c => c.id == id)
+          : all.filter(c => c.ciudad === city);
+
+        // 4️⃣ Renderizar tarjetas Bootstrap
+        const cont = document.getElementById('cards');
+        cont.innerHTML = '';
+
+        if (!data.length) {
+          cont.innerHTML = '<p class="text-center">No se encontraron canchas.</p>';
+          return;
+        }
+
+        data.forEach(c => {
+          cont.insertAdjacentHTML('beforeend', `
+            <div class="col-md-4">
+              <div class="card h-100 shadow-sm">
+                <img src="${c.foto ?? 'images/cancha1.jpg'}"
+                     class="card-img-top"
+                     alt="${c.nombre}">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">${c.nombre}</h5>
+                  <p class="mb-1"><strong>Tipo:</strong> ${c.tipo ?? 'Sintética'}</p>
+                  <p class="mb-1"><strong>Precio:</strong> $${Number(c.precio).toLocaleString()}</p>
+                  <p class="mb-1"><strong>Dirección:</strong> ${c.direccion ?? '—'}</p>
+                  <p class="mb-3"><strong>Techada:</strong> ${c.techada ? 'Sí' : 'No'}</p>
+                  <button class="btn btn-outline-primary btn-detalle"
+                          data-id="${c.id}"
+                          data-fecha="${date}"
+                          data-hora="${time}">
+                    Ver horarios
+                  </button>
+                </div>
+              </div>
+            </div>`);
+        });
+
+        // 5️⃣ Enganchar evento “Ver horarios” a cada botón
+        document.querySelectorAll('.btn-detalle').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const canchaId = btn.dataset.id;
+            const fecha    = btn.dataset.fecha;
+            const horaSel  = btn.dataset.hora;
+            // Redirige a detalle.html con los tres parámetros
+            window.location.href = `detalle.html?id=${canchaId}&fecha=${fecha}&hora=${horaSel}`;
+          });
+        });
+
+      } catch (err) {
+        console.error(err);
+        alert('Error al obtener canchas');
+      }
+    })();
+  </script>
+</body>
+</html>

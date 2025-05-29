@@ -1,0 +1,87 @@
+/* Estilos personalizados para Flatpickr */
+.flatpickr-calendar {
+  background-color: var(--clr-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--clr-border);
+  font-family: var(--font-secondary);
+  z-index: 9999;
+}
+
+.flatpickr-day.selected, 
+.flatpickr-day.startRange, 
+.flatpickr-day.endRange, 
+.flatpickr-day.selected.inRange, 
+.flatpickr-day.startRange.inRange, 
+.flatpickr-day.endRange.inRange, 
+.flatpickr-day.selected:focus, 
+.flatpickr-day.startRange:focus, 
+.flatpickr-day.endRange:focus, 
+.flatpickr-day.selected:hover, 
+.flatpickr-day.startRange:hover, 
+.flatpickr-day.endRange:hover, 
+.flatpickr-day.selected.prevMonthDay, 
+.flatpickr-day.startRange.prevMonthDay, 
+.flatpickr-day.endRange.prevMonthDay, 
+.flatpickr-day.selected.nextMonthDay, 
+.flatpickr-day.startRange.nextMonthDay, 
+.flatpickr-day.endRange.nextMonthDay {
+  background: var(--clr-primary);
+  border-color: var(--clr-primary);
+}
+
+.flatpickr-time .numInputWrapper span.arrowUp:after,
+.flatpickr-time .numInputWrapper span.arrowDown:after {
+  border-bottom-color: var(--clr-primary);
+  border-top-color: var(--clr-primary);
+}
+
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+  fill: var(--clr-primary);
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months:hover,
+.numInputWrapper:hover {
+  background: rgba(40, 167, 69, 0.1);
+}
+
+.flatpickr-time input:hover,
+.flatpickr-time .flatpickr-am-pm:hover,
+.flatpickr-time input:focus,
+.flatpickr-time .flatpickr-am-pm:focus {
+  background: rgba(40, 167, 69, 0.1);
+}
+
+/* Botones de Ahora y Aceptar */
+.flatpickr-time .flatpickr-time-separator,
+.flatpickr-time .flatpickr-am-pm {
+  color: var(--clr-text);
+}
+
+.flatpickr-confirm {
+  background-color: var(--clr-primary);
+  color: white;
+  border-radius: var(--border-radius);
+  padding: 8px 15px;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-weight: 500;
+  margin: 10px auto;
+  display: block;
+}
+
+.flatpickr-confirm:hover {
+  background-color: var(--clr-primary-dark);
+}
+
+/* Estilo para los inputs */
+input.flatpickr-input {
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  border: 1px solid var(--clr-primary);
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1rem;
+}

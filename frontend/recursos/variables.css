@@ -1,0 +1,11 @@
+:root {
+  --color-principal: #28a745;
+  --color-secundario: #333;
+  --color-fondo: #f4f4f4;
+  --color-texto: #212121;
+
+  --fuente-principal: 'Roboto', sans-serif;
+
+  --espaciado-base: 1rem;
+  --borde-redondo: 12px;
+}

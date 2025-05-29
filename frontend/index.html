@@ -1,0 +1,542 @@
+<!DOCTYPE html> 
+<html lang="es"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="description" content="Reserva canchas sintéticas de fútbol en las principales ciudades de Colombia">
+    <meta name="keywords" content="canchas sintéticas, alquiler canchas, fútbol, reservas deportivas">
+    <title>Tu Cancha - Alquiler de Canchas Sintéticas</title> 
+    <!-- Enlace a Bootstrap CSS --> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"> 
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+	<!-- Flatpickr (para fecha y hora) -->
+    <!-- FLATPICKR -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+
+
+
+	<!-- Enlace a tu archivo CSS personalizado --> 
+    <link rel="stylesheet" href="recursos/styles.css"> 
+</head>
+
+<body> 
+    <!-- Header con logo y navegación --> 
+    <header class="bg-success text-white p-3">
+        <div class="container d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <a href="#" class="d-flex align-items-center text-decoration-none">
+                    <img src="images/logo.png" alt="Logo Tu Cancha" class="logo me-3">
+                    <h1 class="mb-0 fs-5 d-none d-md-block">"Canchas perfectas para tus mejores partidos"</h1>
+                </a>
+            </div>
+            <div class="d-flex align-items-center">
+                <nav class="d-none d-md-block me-3">
+                    <a href="#canchas" class="text-white mx-2">Reserva Ya</a>
+                    <a href="#quienes-somos" class="text-white mx-2">Quiénes Somos</a>
+                    <a href="#reglas" class="text-white mx-2">Reglas de Uso</a>
+                    <a href="#contacto" class="text-white mx-2">Contacto</a>
+                </nav>
+                
+                <!-- Botón Iniciar Sesión (visible cuando no hay sesión) -->
+                <a href="admin.html" id="btnIniciarSesion" class="btn btn-outline-light">
+                    <i class="fas fa-user me-2"></i>Acceso Administradores
+                </a>
+                
+                <!-- Menú desplegable de usuario (oculto por defecto) -->
+                <div class="dropdown" id="userDropdown" style="display: none;">
+                    <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user me-2"></i><span id="nombreUsuario">Usuario</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="profile.html">
+                            <i class="fas fa-user me-2"></i>Mi Perfil
+                        </a>
+                        <a class="dropdown-item admin-link d-none" href="admin-panel.html">
+                            <i class="fas fa-cog me-2"></i>Panel de Administración
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" id="btnCerrarSesion" onclick="cerrarSesion()">
+                            <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Menú hamburguesa para móviles -->
+                <button class="navbar-toggler d-md-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMobile">
+                    <i class="fas fa-bars text-white"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Menú móvil colapsable -->
+        <div class="collapse navbar-collapse mt-3 d-md-none" id="navbarMobile">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a href="#canchas" class="nav-link text-white">Reserva Ya</a></li>
+                <li class="nav-item"><a href="#quienes-somos" class="nav-link text-white">Quiénes Somos</a></li>
+                <li class="nav-item"><a href="#reglas" class="nav-link text-white">Reglas de Uso</a></li>
+                <li class="nav-item"><a href="#contacto" class="nav-link text-white">Contacto</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Carrusel de imágenes --> 
+    <div id="carruselCanchas" class="carousel slide" data-bs-ride="carousel"> 
+        <div class="carousel-indicators"> 
+            <button type="button" data-bs-target="#carruselCanchas" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button> 
+            <button type="button" data-bs-target="#carruselCanchas" data-bs-slide-to="1" aria-label="Slide 2"></button> 
+            <button type="button" data-bs-target="#carruselCanchas" data-bs-slide-to="2" aria-label="Slide 3"></button> 
+        </div> 
+        <div class="carousel-inner"> 
+            <div class="carousel-item active"> 
+                <img src="images/cancha1.jpg" class="d-block w-100" alt="Cancha 1" /> 
+                <div class="carousel-caption d-none d-md-block"> 
+                    <h5>Canchas de Calidad</h5> 
+                    <p>Disfruta de las mejores canchas sintéticas del país.</p> 
+                </div> 
+            </div>
+            <div class="carousel-item">
+                <img src="images/cancha2.jpg" class="d-block w-100" alt="Cancha 2" />
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Eventos Especiales</h5>
+                    <p>Organizamos torneos y eventos deportivos.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="images/cancha3.jpg" class="d-block w-100" alt="Cancha 3" />
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Reserva Fácil</h5>
+                    <p>Accede a la mejor experiencia de reserva online.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carruselCanchas" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carruselCanchas" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
+    <!-- =========================================================
+        CONTENIDO PRINCIPAL
+    ========================================================= -->
+    <!-- Contenido principal --> 
+    <main class="container my-5"> 
+        <!-- Sección de Canchas -->  
+        <section id="canchas" class="mb-5"> 
+            <div class="text-center mb-4">
+                <h2 class="text-success">¡No des más vueltas! Reserva fácil en 3 pasos</h2> 
+                <p class="lead">Explora nuestras canchas sintéticas de alta calidad y reserva la que más te guste.</p>
+            </div>
+            
+            <div class="search-container bg-success p-4 rounded shadow">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-3">
+                        <label for="selCiudad" class="form-label text-white">Ciudad</label>
+                        <select id="selCiudad" class="form-select reservation-input">
+                            <option value="">Selecciona una ciudad</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label for="selCancha" class="form-label text-white">Cancha</label>
+                        <select id="selCancha" class="form-select reservation-input"> 
+                            <option value="">Selecciona una cancha</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <label for="selFecha" class="form-label text-white">Fecha</label>
+                        <div class="position-relative">
+                            <input type="date" id="selFecha" class="form-control reservation-input">
+                            
+                            <i class="fas fa-calendar-alt position-absolute end-0 top-50 translate-middle-y me-3 text-success"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <label for="selHora" class="form-label text-white">Hora</label>
+                        <div class="position-relative">
+                            <input type="text" id="selHora" class="form-control reservation-input" placeholder="Selecciona hora" readonly>
+                            <i class="fas fa-clock position-absolute end-0 top-50 translate-middle-y me-3 text-success"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <button id="btnBuscar" class="btn btn-danger w-100 reservation-btn">Buscar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Por qué elegir Tu Cancha App --> 
+        <section id="por-que-elegir" class="text-center my-5">
+            <h2 class="mb-4">¿Por qué elegir Tu Cancha App?</h2> 
+            <div class="row justify-content-center g-4"> 
+                <div class="col-md-3"> 
+                    <div class="feature-card h-100"> 
+                        <i class="fas fa-futbol feature-icon"></i>
+                        <h3 class="feature-title">Canchas de Calidad</h3> 
+                        <p>Contamos con las mejores canchas sintéticas, mantenidas en perfectas condiciones.</p> 
+                    </div> 
+                </div> 
+                <div class="col-md-3"> 
+                    <div class="feature-card h-100"> 
+                        <i class="fas fa-clock feature-icon"></i>
+                        <h3 class="feature-title">Reserva 24/7</h3> 
+                        <p>Reserva en cualquier momento del día desde tu dispositivo móvil o computadora.</p> 
+                    </div> 
+                </div> 
+                <div class="col-md-3"> 
+                    <div class="feature-card h-100"> 
+                        <i class="fas fa-shield-alt feature-icon"></i>
+                        <h3 class="feature-title">Pago Seguro</h3> 
+                        <p>Realiza tus pagos de forma segura a través de nuestra plataforma.</p> 
+                    </div> 
+                </div> 
+                <div class="col-md-3"> 
+                    <div class="feature-card h-100"> 
+                        <i class="fas fa-headset feature-icon"></i>
+                        <h3 class="feature-title">Soporte 24/7</h3> 
+                        <p>Nuestro equipo de soporte está disponible para ayudarte en cualquier momento.</p> 
+                    </div> 
+                </div> 
+            </div> 
+        </section>
+
+        <!-- Sección Quiénes Somos --> 
+        <section id="quienes-somos" class="my-5"> 
+            <div class="row align-items-center"> 
+                <div class="col-lg-6 mb-4 mb-lg-0"> 
+                    <img src="images/equipo.jpg" alt="Nuestro Equipo" class="img-fluid rounded shadow-sm w-100"> 
+                </div> 
+                <div class="col-lg-6"> 
+                    <h2 class="text-success mb-3">Quiénes Somos</h2> 
+                    <p class="lead">Tu Cancha es la plataforma líder en reservas de canchas sintéticas en Colombia.</p> 
+                    <p>Nacimos en 2020 con la misión de facilitar el acceso al deporte y la actividad física, conectando a los amantes del fútbol con los mejores espacios deportivos del país.</p> 
+                    <p>Nuestro equipo está formado por apasionados del deporte que entienden las necesidades de los jugadores y trabajan constantemente para mejorar la experiencia de reserva.</p> 
+                    <div class="d-flex mt-4"> 
+                        <div class="me-4"> 
+                            <h4 class="text-success">+500</h4> 
+                            <p>Canchas disponibles</p> 
+                        </div> 
+                        <div class="me-4"> 
+                            <h4 class="text-success">+50,000</h4> 
+                            <p>Usuarios activos</p> 
+                        </div> 
+                        <div> 
+                            <h4 class="text-success">+10</h4> 
+                            <p>Ciudades</p> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+        </section>
+
+        <!-- Sección Reglas de Uso --> 
+        <section id="reglas" class="my-5 bg-light p-4 rounded shadow-sm"> 
+            <h2 class="text-success mb-4 text-center">Reglas de Uso</h2> 
+            <div class="row"> 
+                <div class="col-md-6"> 
+                    <div class="card mb-3 border-0 shadow-sm"> 
+                        <div class="card-body"> 
+                            <h5 class="card-title"><i class="fas fa-check-circle text-success me-2"></i>Reservas</h5> 
+                            <ul class="list-unstyled"> 
+                                <li><i class="fas fa-angle-right text-success me-2"></i>Las reservas deben realizarse con mínimo 2 horas de anticipación.</li> 
+                                <li><i class="fas fa-angle-right text-success me-2"></i>El pago debe completarse para confirmar la reserva.</li> 
+                                <li><i class="fas fa-angle-right text-success me-2"></i>Cancelaciones con menos de 24 horas tienen un cargo del 50%.</li> 
+                            </ul> 
+                        </div> 
+                    </div> 
+                </div> 
+                <div class="col-md-6"> 
+                    <div class="card mb-3 border-0 shadow-sm"> 
+                        <div class="card-body"> 
+                            <h5 class="card-title"><i class="fas fa-users text-success me-2"></i>Durante el Juego</h5> 
+                            <ul class="list-unstyled"> 
+                                <li><i class="fas fa-angle-right text-success me-2"></i>Presentarse 15 minutos antes de la hora reservada.</li> 
+                                <li><i class="fas fa-angle-right text-success me-2"></i>Usar calzado adecuado para canchas sintéticas.</li> 
+                                <li><i class="fas fa-angle-right text-success me-2"></i>Respetar las instalaciones y a otros usuarios.</li> 
+                            </ul> 
+                        </div> 
+                    </div> 
+                </div> 
+                <div class="col-md-6"> 
+                    <div class="card mb-3 border-0 shadow-sm"> 
+                        <div class="card-body"> 
+                            <h5 class="card-title"><i class="fas fa-ban text-success me-2"></i>Prohibiciones</h5> 
+                            <ul class="list-unstyled"> 
+                                <li><i class="fas fa-angle-right text-success me-2"></i>No se permite el consumo de alcohol dentro de las instalaciones.</li> 
+                                <li><i class="fas fa-angle-right text-success me-2"></i>No se permite fumar en las canchas ni áreas comunes.</li> 
+                                <li><i class="fas fa-angle-right text-success me-2"></i>No se permiten mascotas en las áreas deportivas.</li> 
+                            </ul> 
+                        </div> 
+                    </div> 
+                </div> 
+                <div class="col-md-6"> 
+                    <div class="card mb-3 border-0 shadow-sm"> 
+                        <div class="card-body"> 
+                            <h5 class="card-title"><i class="fas fa-info-circle text-success me-2"></i>Información Adicional</h5> 
+                            <ul class="list-unstyled"> 
+                                <li><i class="fas fa-angle-right text-success me-2"></i>Algunas canchas ofrecen servicio de alquiler de balones.</li> 
+                                <li><i class="fas fa-angle-right text-success me-2"></i>Consulta la disponibilidad de estacionamiento.</li> 
+                                <li><i class="fas fa-angle-right text-success me-2"></i>Verifica los servicios adicionales de cada cancha.</li> 
+                            </ul> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+        </section>
+
+        <!-- Sección de Testimonios --> 
+        <section id="testimonios" class="my-5"> 
+            <h2 class="text-success mb-4 text-center">Lo que dicen nuestros usuarios</h2> 
+            <div class="row g-4"> 
+                <div class="col-md-4"> 
+                    <div class="card h-100 border-0 shadow-sm testimonial-card"> 
+                        <div class="card-body text-center"> 
+                            <div class="testimonial-stars mb-3"> 
+                                <i class="fas fa-star"></i> 
+                                <i class="fas fa-star"></i> 
+                                <i class="fas fa-star"></i> 
+                                <i class="fas fa-star"></i> 
+                                <i class="fas fa-star"></i> 
+                            </div> 
+                            <p class="card-text">"Excelente servicio, muy fácil de usar. He reservado varias veces y siempre ha sido una experiencia perfecta."</p> 
+                            <h5 class="card-title">Juan Pérez</h5> 
+                            <p class="card-subtitle text-muted">Jugador Amateur</p> 
+                        </div> 
+                    </div> 
+                </div> 
+                <div class="col-md-4"> 
+                    <div class="card h-100 border-0 shadow-sm testimonial-card"> 
+                        <div class="card-body text-center"> 
+                            <div class="testimonial-stars mb-3"> 
+                                <i class="fas fa-star"></i> 
+                                <i class="fas fa-star"></i> 
+                                <i class="fas fa-star"></i> 
+                                <i class="fas fa-star"></i> 
+                                <i class="fas fa-star-half-alt"></i> 
+                            </div> 
+                            <p class="card-text">"Las canchas están en excelentes condiciones y el proceso de reserva es muy sencillo. Totalmente recomendado."</p> 
+                            <h5 class="card-title">María Rodríguez</h5> 
+                            <p class="card-subtitle text-muted">Capitana de Equipo</p> 
+                        </div> 
+                    </div> 
+                </div> 
+                <div class="col-md-4"> 
+                    <div class="card h-100 border-0 shadow-sm testimonial-card"> 
+                        <div class="card-body text-center"> 
+                            <div class="testimonial-stars mb-3"> 
+                                <i class="fas fa-star"></i> 
+                                <i class="fas fa-star"></i> 
+                                <i class="fas fa-star"></i> 
+                                <i class="fas fa-star"></i> 
+                                <i class="fas fa-star"></i> 
+                            </div> 
+                            <p class="card-text">"El personal es amable y las instalaciones están muy bien cuidadas. ¡Una gran experiencia!"</p>
+                            <h5 class="card-title">Carlos López</h5>
+                            <p class="card-subtitle text-muted">Entrenador</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === Mis reservas =================================================== -->
+        <section id="mis-reservas" class="mb-5" style="display:none">
+            <h2 class="text-success mb-3">Mis reservas</h2>
+
+            <div class="table-responsive">
+                <table class="table table-striped text-center align-middle">
+                    <thead class="table-dark">
+                        <tr><th>ID</th><th>Cancha</th><th>Ciudad</th>
+                            <th>Fecha</th><th>Hora</th><th>Estado</th><th>Acción</th></tr>
+                    </thead>
+                    <tbody id="tbMisReservas"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sección de Contacto --> 
+        <section id="contacto" class="bg-light py-5 rounded shadow-sm"> 
+            <div class="container"> 
+                <div class="text-center mb-4">
+                    <h2 class="text-success">Contáctanos</h2>
+                    <p class="lead">¿Tienes alguna pregunta? Estamos aquí para ayudarte.</p>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mensaje" class="form-label">Mensaje</label>
+                                <textarea class="form-control" id="mensaje" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <h3 class="card-title">Información de Contacto</h3>
+                                <ul class="list-unstyled">
+                                    <li class="mb-3">
+                                        <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                                        Calle Principal #123, Bogotá, Colombia
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-phone me-2 text-primary"></i>
+                                        +57 300 123 4567
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-envelope me-2 text-primary"></i>
+                                        info@tucancha.com
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-clock me-2 text-primary"></i>
+                                        Lunes a Domingo: 8:00 AM - 10:00 PM
+                                    </li>
+                                </ul>
+                                
+                                <div class="social-icons mt-4">
+                                    <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#" class="me-3"><i class="fab fa-instagram"></i></a>
+                                    <a href="#" class="me-3"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="me-3"><i class="fab fa-whatsapp"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- =========================================================
+        FOOTER
+    ========================================================= -->
+    <!-- Footer --> 
+    <footer class="bg-dark text-white py-4"> 
+        <div class="container"> 
+            <div class="row"> 
+                <div class="col-md-4 mb-4 mb-md-0"> 
+                    <h5>Tu Cancha</h5> 
+                    <p>La mejor plataforma para reservar canchas sintéticas en Colombia.</p> 
+                    <div class="social-icons"> 
+                        <a href="#"><i class="fab fa-facebook-f"></i></a> 
+                        <a href="#"><i class="fab fa-instagram"></i></a> 
+                        <a href="#"><i class="fab fa-twitter"></i></a> 
+                        <a href="#"><i class="fab fa-youtube"></i></a> 
+                    </div> 
+                </div> 
+                
+                <div class="col-md-4 mb-4 mb-md-0"> 
+                    <h5>Enlaces Rápidos</h5> 
+                    <ul class="list-unstyled"> 
+                        <li><a href="#canchas">Reservar</a></li> 
+                        <li><a href="#quienes-somos">Quiénes Somos</a></li> 
+                        <li><a href="#reglas">Reglas de Uso</a></li> 
+                        <li><a href="#contacto">Contacto</a></li> 
+                    </ul> 
+                </div> 
+                
+                <div class="col-md-4"> 
+                    <h5>Ciudades</h5> 
+                    <ul class="list-unstyled"> 
+                        <li>Bogotá</li> 
+                        <li>Medellín</li> 
+                        <li>Cali</li> 
+                        <li>Barranquilla</li> 
+                    </ul> 
+                </div> 
+            </div> 
+            
+            <div class="copyright text-center mt-4"> 
+                <p>&copy; 2023 Tu Cancha. Todos los derechos reservados.</p> 
+            </div> 
+        </div> 
+    </footer>
+
+    <!-- Scripts de Bootstrap y jQuery --> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="index.js"></script>
+    <!-- Flatpickr (para fecha y hora) -->
+   
+   
+   <!-- ⬇️ Pega justo aquí, antes del script -->
+<!-- Selector de Hora Personalizado -->
+
+
+
+
+  <!-- Selector de Hora Personalizado -->
+  <div id="modalOverlay" class="modal-overlay" style="display: none;">
+    <div class="time-picker-popup" id="timePickerPopup">
+      <div class="time-columns">
+        <div id="hourColumn" class="time-column"></div>
+        <div id="minuteColumn" class="time-column"></div>
+      </div>
+      <div class="d-flex justify-content-end gap-2 mt-3">
+        <button id="nowButton" class="btn btn-outline-secondary btn-sm">Ahora</button>
+        <button id="acceptButton" class="btn btn-success btn-sm">✓</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+
+   
+    	
+</body>
+</html>
+
+<script>
+function actualizarUI() {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    
+    if (token) {
+        // Mostrar menú de usuario
+        document.getElementById('btnIniciarSesion').style.display = 'none';
+        document.getElementById('userDropdown').style.display = 'block';
+        document.getElementById('nombreUsuario').textContent = user.nombre || 'Usuario';
+        
+        // Mostrar/ocultar enlace de admin según corresponda
+        const adminLink = document.querySelector('.admin-link');
+        if (adminLink) {
+            adminLink.classList.toggle('d-none', !user.isAdmin);
+        }
+    } else {
+        // Mostrar botón de inicio de sesión
+        document.getElementById('btnIniciarSesion').style.display = 'block';
+        document.getElementById('userDropdown').style.display = 'none';
+    }
+}
+
+// Actualizar UI cuando cambia el almacenamiento
+window.addEventListener('storage', function(e) {
+    if (e.key === 'token' || e.key === 'user') {
+        actualizarUI();
+    }
+});
+
+// Actualizar UI al cargar la página
+document.addEventListener('DOMContentLoaded', actualizarUI);
+</script>
