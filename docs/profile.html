@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Tu Cancha</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="recursos/styles.css">
+    <style>
+        .profile-header {
+            background-color: #198754;
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            border: 4px solid white;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        
+        .profile-avatar i {
+            font-size: 3rem;
+            color: #6c757d;
+        }
+        
+        .profile-card {
+            border-radius: 8px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .profile-card-header {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .profile-card-body {
+            padding: 1.5rem;
+        }
+        
+        .profile-nav {
+            margin-bottom: 2rem;
+        }
+        
+        .profile-nav .nav-link {
+            color: #6c757d;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+        
+        .profile-nav .nav-link.active {
+            background-color: #198754;
+            color: white;
+        }
+        
+        .profile-nav .nav-link:hover:not(.active) {
+            background-color: #f8f9fa;
+        }
+        
+        .btn-save {
+            background-color: #ff5a5f;
+            border: none;
+        }
+        
+        .btn-save:hover {
+            background-color: #ff4146;
+        }
+        
+        .reservation-history-item {
+            border-left: 4px solid #198754;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .reservation-history-item.cancelled {
+            border-left-color: #dc3545;
+        }
+        
+        .reservation-history-item.completed {
+            border-left-color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header con logo y navegación --> 
+    <header class="bg-success text-white p-3"> 
+        <div class="container d-flex align-items-center justify-content-between"> 
+            <div class="d-flex align-items-center">
+                <a href="index.html" class="d-flex align-items-center text-decoration-none text-white"> 
+                    <img src="images/logo.png" alt="Logo Tu Cancha" class="logo me-3"> 
+                    <h1 class="mb-0 fs-5 d-none d-md-block">"Canchas perfectas para tus mejores partidos"</h1> 
+                </a>
+            </div>
+            <nav class="d-none d-md-block"> 
+                <a href="index.html#canchas" class="text-white mx-2">Reserva Ya</a> 
+                <a href="index.html#quienes-somos" class="text-white mx-2">Quiénes Somos</a> 
+                <a href="index.html#reglas" class="text-white mx-2">Reglas de Uso</a> 
+                <a href="index.html#contacto" class="text-white mx-2">Contacto</a> 
+                <a href="#" onclick="logout()" class="text-white mx-2">Cerrar Sesión</a>
+            </nav>
+            <!-- Menú hamburguesa para móviles -->
+            <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMobile">
+                <i class="fas fa-bars text-white"></i>
+            </button>
+        </div>
+        <!-- Menú móvil colapsable -->
+        <div class="collapse navbar-collapse mt-3 d-md-none" id="navbarMobile">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a href="index.html#canchas" class="nav-link text-white">Reserva Ya</a></li>
+                <li class="nav-item"><a href="index.html#quienes-somos" class="nav-link text-white">Quiénes Somos</a></li>
+                <li class="nav-item"><a href="index.html#reglas" class="nav-link text-white">Reglas de Uso</a></li>
+                <li class="nav-item"><a href="index.html#contacto" class="nav-link text-white">Contacto</a></li>
+                <li class="nav-item"><a href="#" onclick="logout()" class="nav-link text-white">Cerrar Sesión</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Cabecera del perfil -->
+    <section class="profile-header">
+        <div class="container text-center">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <h2 id="profileName">Cargando...</h2>
+            <p id="profileEmail" class="mb-0">Cargando...</p>
+        </div>
+    </section>
+
+    <!-- Contenido principal -->
+    <main class="container my-5">
+        <!-- Navegación del perfil -->
+        <ul class="nav profile-nav" id="profileTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true">
+                    <i class="fas fa-user me-2"></i>Información Personal
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="reservations-tab" data-bs-toggle="tab" data-bs-target="#reservations" type="button" role="tab" aria-controls="reservations" aria-selected="false">
+                    <i class="fas fa-calendar-alt me-2"></i>Mis Reservas
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab" aria-controls="security" aria-selected="false">
+                    <i class="fas fa-lock me-2"></i>Seguridad
+                </button>
+            </li>
+        </ul>
+
+        <!-- Contenido de las pestañas -->
+        <div class="tab-content" id="profileTabsContent">
+            <!-- Pestaña de Información Personal -->
+            <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                <div class="card profile-card">
+                    <div class="profile-card-header">
+                        <h3 class="mb-0">Información Personal</h3>
+                    </div>
+                    <div class="profile-card-body">
+                        <form id="profileForm">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="tu@email.com" readonly>
+                                <small class="text-muted">El email no se puede cambiar</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" id="telefono" placeholder="Tu teléfono">
+                            </div>
+                            <button type="submit" class="btn btn-save text-white">Guardar Cambios</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pestaña de Mis Reservas -->
+            <div class="tab-pane fade" id="reservations" role="tabpanel" aria-labelledby="reservations-tab">
+                <div class="card profile-card">
+                    <div class="profile-card-header d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">Mis Reservas</h3>
+                        <a href="detalle.html" class="btn btn-outline-success">
+                            <i class="fas fa-search me-1"></i>Buscar Canchas
+                        </a>
+                    </div>
+                    <div class="profile-card-body">
+                        <div id="reservationsContainer">
+                            <!-- Se llenará dinámicamente con JavaScript -->
+                            <div class="text-center py-4" id="loadingReservations">
+                                <div class="spinner-border text-success" role="status">
+                                    <span class="visually-hidden">Cargando...</span>
+                                </div>
+                                <p class="mt-2">Cargando tus reservas...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pestaña de Seguridad -->
+            <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                <div class="card profile-card">
+                    <div class="profile-card-header">
+                        <h3 class="mb-0">Cambiar Contraseña</h3>
+                    </div>
+                    <div class="profile-card-body">
+                        <form id="passwordForm">
+                            <div class="mb-3">
+                                <label for="currentPassword" class="form-label">Contraseña Actual</label>
+                                <input type="password" class="form-control" id="currentPassword" placeholder="Ingresa tu contraseña actual">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPassword" class="form-label">Nueva Contraseña</label>
+                                <input type="password" class="form-control" id="newPassword" placeholder="Ingresa tu nueva contraseña">
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">Confirmar Nueva Contraseña</label>
+                                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirma tu nueva contraseña">
+                            </div>
+                            <button type="submit" class="btn btn-save text-white">Cambiar Contraseña</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0 text-center text-md-start">
+                    <img src="images/logo.png" alt="Logo Tu Cancha" class="logo mb-3" style="max-width: 80px;">
+                    <p>Tu Cancha - La mejor plataforma para reservar canchas sintéticas en Colombia.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html#canchas">Reservar</a></li>
+                        <li><a href="index.html#quienes-somos">Quiénes Somos</a></li>
+                        <li><a href="index.html#reglas">Reglas de Uso</a></li>
+                        <li><a href="index.html#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4">
+                    <h5>Ciudades</h5>
+                    <ul class="list-unstyled">
+                        <li>Bogotá</li>
+                        <li>Medellín</li>
+                        <li>Cali</li>
+                        <li>Barranquilla</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright text-center mt-4">
+                <p>&copy; 2023 Tu Cancha. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- App JS (para funciones comunes) -->
+    <script src="app.js"></script>
+    
+    <!-- Script específico para el perfil -->
+    <script>
+        // Verificar si el usuario está autenticado
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                // Redirigir a login si no hay token
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Cargar datos del perfil
+            loadProfileData();
+            
+            // Cargar reservas del usuario
+            loadUserReservations();
+        });
+        
+        // Función para decodificar el token JWT
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                console.error('Error parsing JWT', e);
+                return null;
+            }
+        }
+        
+        // Cargar datos del perfil del usuario
+        async function loadProfileData() {
+            try {
+                const token = localStorage.getItem('token');
+                const decoded = parseJwt(token);
+                
+                if (!decoded || !decoded.userId) {
+                    throw new Error('Token inválido');
+                }
+                
+                const response = await fetch(`http://localhost:3000/api/usuarios/${decoded.userId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Error al cargar datos del perfil');
+                }
+                
+                const userData = await response.json();
+                
+                // Actualizar la interfaz con los datos del usuario
+                document.getElementById('profileName').textContent = userData.nombre;
+                document.getElementById('profileEmail').textContent = userData.email;
+                
+                // Llenar el formulario
+                document.getElementById('nombre').value = userData.nombre;
+                document.getElementById('email').value = userData.email;
+                document.getElementById('telefono').value = userData.telefono || '';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                // Si hay un error con el token, redirigir al login
+                if (error.message === 'Token inválido') {
+                    localStorage.removeItem('token');
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Error al cargar los datos del perfil. Por favor, intenta de nuevo más tarde.');
+                }
+            }
+        }
+        
+        // Cargar reservas del usuario
+        async function loadUserReservations() {
+            try {
+                const token = localStorage.getItem('token');
+                
+                const response = await fetch('http://localhost:3000/api/reservas', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Error al cargar reservas');
+                }
+                
+                const reservations = await response.json();
+                
+                // Ocultar spinner de carga
+                document.getElementById('loadingReservations').style.display = 'none';
+                
+                const container = document.getElementById('reservationsContainer');
+                
+                if (reservations.length === 0) {
+                    container.innerHTML = '<div class="text-center py-4"><p>No tienes reservas actualmente.</p></div>';
+                    return;
+                }
+                
+                // Ordenar reservas por fecha (más recientes primero)
+                reservations.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+                
+                let html = '';
+                
+                reservations.forEach(reservation => {
+                    const fecha = new Date(reservation.fecha).toLocaleDateString('es-ES', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    
+                    let statusClass = '';
+                    if (reservation.estado === 'CANCELADA') {
+                        statusClass = 'cancelled';
+                    } else if (reservation.estado === 'COMPLETADA') {
+                        statusClass = 'completed';
+                    }
+                    
+                    html += `
+                        <div class="reservation-history-item ${statusClass} p-3 bg-light rounded mb-3">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="mb-1">${reservation.cancha}</h5>
+                                    <p class="mb-1"><i class="fas fa-map-marker-alt me-2 text-success"></i>${reservation.ciudad}</p>
+                                    <p class="mb-1"><i class="fas fa-calendar me-2 text-success"></i>${fecha} - ${reservation.hora}</p>
+                                </div>
+                                <span class="badge ${reservation.estado === 'PENDIENTE' ? 'bg-success' : reservation.estado === 'CANCELADA' ? 'bg-danger' : 'bg-secondary'} p-2">
+                                    ${reservation.estado}
+                                </span>
+                            </div>
+                            ${reservation.estado === 'PENDIENTE' ? 
+                                `<div class="mt-2">
+                                    <button class="btn btn-sm btn-danger" onclick="cancelReservation(${reservation.id})">
+                                        <i class="fas fa-times me-1"></i>Cancelar
+                                    </button>
+                                </div>` : 
+                                ''
+                            }
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loadingReservations').style.display = 'none';
+                document.getElementById('reservationsContainer').innerHTML = 
+                    '<div class="alert alert-danger">Error al cargar las reservas. Por favor, intenta de nuevo más tarde.</div>';
+            }
+        }
+        
+        // Cancelar una reserva
+        async function cancelReservation(id) {
+            if (!confirm('¿Estás seguro de que deseas cancelar esta reserva?')) {
+                return;
+            }
+            
+            try {
+                const token = localStorage.getItem('token');
+                
+                const response = await fetch(`http://localhost:3000/api/reservas/${id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ estado: 'CANCELADA' })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Error al cancelar la reserva');
+                }
+                
+                alert('Reserva cancelada correctamente');
+                
+                // Recargar las reservas
+                loadUserReservations();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cancelar la reserva. Por favor, intenta de nuevo más tarde.');
+            }
+        }
+        
+        // Actualizar perfil
+        document.getElementById('profileForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('nombre').value;
+            const telefono = document.getElementById('telefono').value;
+            
+            if (!nombre) {
+                alert('El nombre es obligatorio');
+                return;
+            }
+            
+            try {
+                const token = localStorage.getItem('token');
+                const decoded = parseJwt(token);
+                
+                if (!decoded || !decoded.userId) {
+                    throw new Error('Token inválido');
+                }
+                
+                const response = await fetch(`http://localhost:3000/api/usuarios/${decoded.userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ nombre, telefono })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Error al actualizar perfil');
+                }
+                
+                alert('Perfil actualizado correctamente');
+                
+                // Actualizar nombre en la cabecera
+                document.getElementById('profileName').textContent = nombre;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al actualizar el perfil. Por favor, intenta de nuevo más tarde.');
+            }
+        });
+        
+        // Cambiar contraseña
+        document.getElementById('passwordForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                alert('Todos los campos son obligatorios');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                alert('Las contraseñas nuevas no coinciden');
+                return;
+            }
+            
+            try {
+                const token = localStorage.getItem('token');
+                const decoded = parseJwt(token);
+                
+                if (!decoded || !decoded.userId) {
+                    throw new Error('Token inválido');
+                }
+                
+                const response = await fetch(`http://localhost:3000/api/usuarios/${decoded.userId}/password`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ 
+                        currentPassword, 
+                        newPassword 
+                    })
+                });
+                
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.error || 'Error al cambiar contraseña');
+                }
+                
+                alert('Contraseña cambiada correctamente');
+                
+                // Limpiar formulario
+                document.getElementById('passwordForm').reset();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert(error.message || 'Error al cambiar la contraseña. Por favor, intenta de nuevo más tarde.');
+            }
+        });
+        
+        // Función de logout
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('isAdmin');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

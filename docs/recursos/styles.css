@@ -1,0 +1,789 @@
+/* Importar Fuentes de Google Fonts */ 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap'); 
+ 
+/* --- Paleta de Colores y Variables Globales --- */ 
+:root { 
+    /* Colores Principales */ 
+    --clr-primary: #28a745; /* Verde Bootstrap Success - Más estándar y vibrante */ 
+    --clr-primary-dark: #218838; /* Verde más oscuro para hover/detalles */ 
+    --clr-accent: #FF5733; /* Naranja para CTAs y acentos */ 
+    --clr-accent-dark: #E14E2B; /* Naranja más oscuro para hover */ 
+ 
+    /* Colores Neutros */ 
+    --clr-text: #343a40; /* Gris oscuro casi negro para texto principal */ 
+    --clr-text-light: #6c757d; /* Gris más claro para texto secundario/placeholders */ 
+    --clr-bg: #FFFFFF; /* Blanco */ 
+    --clr-bg-alt: #f8f9fa; /* Gris muy claro para fondos alternos */ 
+    --clr-border: #dee2e6; /* Gris claro para bordes sutiles */ 
+    --clr-dark: #343a40; /* Color oscuro para footer/elementos */ 
+ 
+    /* Fuentes */ 
+    --font-primary: 'Poppins', sans-serif; /* Fuente para encabezados y elementos destacados */ 
+    --font-secondary: 'Lato', sans-serif; /* Fuente para cuerpo de texto */ 
+ 
+    /* Otros */ 
+    --border-radius: 8px; /* Radio de borde estándar */ 
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.075); 
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    --transition-speed: 0.3s; 
+} 
+ 
+/* --- Estilos Generales y Resets --- */ 
+*, 
+*::before, 
+*::after { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+} 
+ 
+body { 
+    font-family: var(--font-secondary); 
+    background-color: var(--clr-bg-alt); 
+    color: var(--clr-text); 
+    line-height: 1.7; /* Mejor legibilidad */ 
+    font-size: 16px; /* Base */ 
+} 
+ 
+h1, h2, h3, h4, h5, h6 { 
+    font-family: var(--font-primary); 
+    font-weight: 600; /* Semi-Bold para Poppins */ 
+    color: var(--clr-text); /* Color de texto principal por defecto */ 
+    margin-bottom: 0.75em; /* Espacio debajo de los encabezados */ 
+    line-height: 1.3; 
+} 
+ 
+h1 { font-size: 2.5rem; } /* 40px */ 
+h2 { font-size: 2rem; } /* 32px */ 
+h3 { font-size: 1.75rem; } /* 28px */ 
+h4 { font-size: 1.5rem; } /* 24px */ 
+h5 { font-size: 1.25rem; } /* 20px */ 
+h6 { font-size: 1rem; } /* 16px */ 
+ 
+p { 
+    margin-bottom: 1rem; 
+    color: var(--clr-text-light); 
+} 
+ 
+a { 
+    color: var(--clr-primary); 
+    text-decoration: none; 
+    transition: color var(--transition-speed) ease; 
+} 
+ 
+a:hover { 
+    color: var(--clr-primary-dark); 
+    text-decoration: underline; 
+} 
+ 
+img { 
+    max-width: 100%; 
+    height: auto; 
+    display: block; /* Evita espacio extra debajo */ 
+} 
+ 
+ul { 
+    list-style: none; /* Quitar puntos por defecto, añadir si se necesita */ 
+} 
+ 
+button { 
+    font-family: var(--font-primary); /* Usar fuente primaria para botones */ 
+    cursor: pointer; 
+    border-radius: var(--border-radius); 
+    padding: 0.75em 1.5em; /* Padding más generoso */ 
+    border: none; 
+    font-weight: 600; 
+    transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease; 
+} 
+ 
+/* Estilo base botones primarios (Naranja) */ 
+.btn-primary, button[type="submit"], .btn-login, .reservation-btn { 
+    background-color: var(--clr-accent); 
+    color: var(--clr-bg); 
+} 
+ 
+.btn-primary:hover, button[type="submit"]:hover, .btn-login:hover, .reservation-btn:hover { 
+    background-color: var(--clr-accent-dark); 
+    transform: translateY(-2px); /* Ligero efecto al pasar el ratón */ 
+} 
+ 
+/* Estilo base botones secundarios (Verde) */ 
+.btn-secondary { 
+     background-color: var(--clr-primary); 
+     color: var(--clr-bg); 
+} 
+.btn-secondary:hover { 
+     background-color: var(--clr-primary-dark); 
+     transform: translateY(-2px); 
+} 
+ 
+/* Estilo base botones terciarios (Gris Oscuro) */ 
+.btn-tertiary, .btn-volver { 
+     background-color: var(--clr-text-light); 
+     color: var(--clr-bg); 
+} 
+.btn-tertiary:hover, .btn-volver:hover { 
+     background-color: var(--clr-text); /* Oscurecer gris */ 
+     transform: translateY(-2px); 
+} 
+ 
+ 
+/* --- Estilos del Header --- */ 
+header { 
+    /* display, align-items, justify-content vienen de Bootstrap */ 
+    background-color: var(--clr-primary); /* Usar el verde primario */ 
+    color: var(--clr-bg); 
+    padding: 1rem 1.5rem; /* Ajustar padding */ 
+    box-shadow: var(--shadow-sm); 
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+} 
+ 
+header .logo { 
+    width: 80px; /* Ajustar si es necesario */ 
+    /* height: auto; */ 
+    /* margin-right: 1rem; quitado, Bootstrap d-flex y me-3 se encargan */ 
+    transition: transform 0.3s ease;
+} 
+
+header .logo:hover {
+    transform: scale(1.05);
+}
+ 
+header h1 { /* Eslogan ahora */ 
+    font-size: 1.1em; 
+    margin: 0; 
+    font-weight: 400; /* Menos peso para el eslogan */ 
+    color: var(--clr-bg); 
+    text-align: center; /* Centrar si crece */ 
+    flex-grow: 1; 
+} 
+ 
+header nav a { 
+    color: var(--clr-bg); 
+    margin: 0 0.75rem; /* Ajustar margen */ 
+    text-decoration: none; 
+    font-weight: 600; /* Poppins semi-bold */ 
+    font-family: var(--font-primary); 
+    position: relative;
+    padding-bottom: 3px;
+} 
+ 
+header nav a:hover { 
+    text-decoration: none; /* Quitar subrayado */ 
+    opacity: 0.8; /* Efecto sutil */ 
+} 
+
+header nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--clr-bg);
+    transition: width 0.3s ease;
+}
+
+header nav a:hover::after {
+    width: 100%;
+}
+ 
+ 
+/* --- Carrusel --- */ 
+#carruselCanchas {
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-md);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+#carruselCanchas .carousel-item {
+    transition: transform 0.6s ease-in-out;
+}
+
+#carruselCanchas .carousel-item img { 
+    height: 50vh; /* Altura reducida relativa a la ventana */ 
+    min-height: 300px; /* Altura mínima reducida */ 
+    max-height: 500px; /* Altura máxima reducida */ 
+    object-fit: cover; 
+    object-position: center; /* Centrar la imagen */
+    transition: transform 1.5s ease;
+} 
+
+#carruselCanchas .carousel-item:hover img {
+    transform: scale(1.03);
+}
+ 
+#carruselCanchas .carousel-caption { 
+    background: rgba(0, 0, 0, 0.6); /* Fondo más oscuro */ 
+    padding: 1.5rem; 
+    border-radius: var(--border-radius); 
+    bottom: 3rem; /* Subir un poco el caption */
+    transform: translateY(10px);
+    opacity: 0.9;
+    transition: all 0.4s ease;
+} 
+
+#carruselCanchas .carousel-item:hover .carousel-caption {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+#carruselCanchas .carousel-caption h5 { 
+    font-family: var(--font-primary); 
+    font-size: 1.75rem; /* Más grande */ 
+    font-weight: 700; /* Poppins Bold */ 
+    margin-bottom: 0.5rem; 
+    color: var(--clr-bg); /* Asegurar color blanco */ 
+}
+
+/* Estilos mejorados para el carrusel existente */
+.carousel-item {
+  height: 500px;
+  background-color: #000;
+}
+
+.carousel-item img {
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  padding: 15px;
+  bottom: 20px;
+}
+
+.carousel-caption h5 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Mejora para dispositivos móviles */
+@media (max-width: 768px) {
+  .carousel-item {
+    height: 300px;
+  }
+  
+  .carousel-caption {
+    padding: 10px;
+  }
+  
+  .carousel-caption h5 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+}
+
+/* --- Selector de Hora --- */
+.time-input-container {
+    position: relative;
+    flex: 1 1 150px;
+}
+
+.time-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--clr-primary);
+    border-radius: var(--border-radius);
+    background-color: var(--clr-bg);
+    color: var(--clr-text);
+    cursor: pointer;
+}
+
+.clock-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--clr-primary);
+    pointer-events: none;
+}
+
+/* Modal del selector de hora */
+.tucancha-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.time-picker-modal {
+    background-color: var(--clr-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    width: 300px;
+    max-width: 90%;
+    position: absolute;
+    z-index: 1001;
+}
+
+/* Posicionamiento del selector de hora */
+.tucancha-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  display: none;
+  z-index: 9999;
+}
+
+.time-picker-popup {
+  position: absolute;
+  top: calc(100% + 5px);  /* justo debajo del input */
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  animation: fadeIn 0.2s ease;
+  border-radius: 10px;
+}
+
+.time-columns {
+  display: flex;
+  gap: 0.5rem;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.time-column {
+  flex: 1;
+  border: 1px solid #eee;
+  border-radius: 0.5rem;
+  overflow-y: auto;
+}
+
+.picker-item {
+  padding: 0.4rem;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.picker-item:hover {
+  background-color: #f0f0f0;
+}
+
+.picker-item.selected {
+  background-color: #198754;
+  color: white;
+  font-weight: bold;
+  border-radius: 0.25rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* --- Sección "Por qué Elegir" --- */
+.feature-card {
+    background-color: var(--clr-bg);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, transparent 100%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--clr-primary);
+    margin-bottom: 1rem;
+    transition: transform 0.4s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: translateY(-5px) scale(1.1);
+}
+
+.feature-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--clr-text);
+}
+
+/* --- Sección Contacto --- */
+#contacto {
+    background-color: var(--clr-bg-alt);
+    padding: 3rem 0;
+    position: relative;
+}
+
+#contacto::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(40, 167, 69, 0.05) 0%, transparent 70%);
+    z-index: 0;
+}
+
+#contacto .container {
+    position: relative;
+    z-index: 1;
+}
+
+#contacto h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#contacto .form-control {
+    border: 1px solid var(--clr-border);
+    border-radius: var(--border-radius);
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+#contacto .form-control:focus {
+    border-color: var(--clr-primary);
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.15);
+    transform: translateY(-2px);
+}
+
+#contacto button[type="submit"] {
+    width: 100%;
+    margin-top: 1rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+#contacto button[type="submit"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.4s ease;
+    z-index: -1;
+}
+
+#contacto button[type="submit"]:hover::before {
+    left: 100%;
+}
+
+/* --- Footer --- */
+footer {
+    background-color: var(--clr-dark);
+    color: var(--clr-bg);
+    padding: 2rem 0;
+    font-size: 0.9rem;
+}
+
+footer h5 {
+    color: var(--clr-bg);
+    font-size: 1.1rem;
+    margin-bottom: 1.25rem;
+}
+
+footer p, footer a {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+}
+
+footer a:hover {
+    color: var(--clr-bg);
+}
+
+footer .social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+footer .social-icons a {
+    color: var(--clr-bg);
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+footer .social-icons a:hover {
+    transform: translateY(-3px);
+}
+
+footer .copyright {
+    text-align: center;
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos para el contenedor de búsqueda */
+.search-container {
+  background-color: #198754 !important;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.search-container .form-label {
+  color: white;
+  font-weight: 500;
+}
+
+.search-container .form-control,
+.search-container .form-select {
+  border: none;
+  border-radius: 4px;
+  height: 45px;
+  background-color: white;
+}
+
+.search-container .reservation-btn {
+  background-color: #ff5a5f;
+  border: none;
+  height: 45px;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.search-container .reservation-btn:hover {
+  background-color: #ff4146;
+}
+
+.time-input-container {
+  position: relative;
+}
+
+.clock-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #198754;
+  pointer-events: none;
+}
+
+/* ✅ Asegurar visibilidad del encabezado 'Dom' en calendario */
+
+/* Estilos personalizados para Flatpickr */
+.flatpickr-calendar {
+    font-size: 14px !important;
+    width: 280px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    border-radius: 8px !important;
+}
+
+.flatpickr-day {
+    height: 36px !important;
+    line-height: 36px !important;
+    border-radius: 50% !important;
+    max-width: 36px !important;
+}
+
+.flatpickr-day.selected, 
+.flatpickr-day.startRange, 
+.flatpickr-day.endRange, 
+.flatpickr-day.selected.inRange, 
+.flatpickr-day.startRange.inRange, 
+.flatpickr-day.endRange.inRange, 
+.flatpickr-day.selected:focus, 
+.flatpickr-day.startRange:focus, 
+.flatpickr-day.endRange:focus, 
+.flatpickr-day.selected:hover, 
+.flatpickr-day.startRange:hover, 
+.flatpickr-day.endRange:hover, 
+.flatpickr-day.selected.prevMonthDay, 
+.flatpickr-day.startRange.prevMonthDay, 
+.flatpickr-day.endRange.prevMonthDay, 
+.flatpickr-day.selected.nextMonthDay, 
+.flatpickr-day.startRange.nextMonthDay, 
+.flatpickr-day.endRange.nextMonthDay {
+    background: #28a745 !important;
+    border-color: #28a745 !important;
+}
+
+.flatpickr-months .flatpickr-month {
+    background: #28a745 !important;
+    color: white !important;
+    fill: white !important;
+    height: 40px !important;
+}
+
+.flatpickr-current-month {
+    padding-top: 5px !important;
+    font-size: 16px !important;
+}
+
+.flatpickr-monthDropdown-months {
+    background: #28a745 !important;
+    color: white !important;
+}
+
+.flatpickr-weekdays {
+    background: #f8f9fa !important;
+    height: 36px !important;
+}
+
+.flatpickr-weekday {
+    height: 36px !important;
+    line-height: 36px !important;
+    font-size: 12px !important;
+    color: #666 !important;
+}
+
+.flatpickr-months .flatpickr-prev-month, 
+.flatpickr-months .flatpickr-next-month {
+    height: 40px !important;
+    padding: 5px !important;
+    fill: white !important;
+}
+
+.numInputWrapper span.arrowUp:after,
+.numInputWrapper span.arrowDown:after {
+    border-bottom-color: #28a745 !important;
+    border-top-color: #28a745 !important;
+}
+
+/* Ajustes para el input de fecha */
+#selFecha {
+    cursor: pointer;
+    background-color: white;
+}
+
+/* Estilos para la página de detalle de cancha */
+.horarios-manana button,
+.horarios-tarde button,
+.horarios-noche button {
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.horarios-manana button:hover,
+.horarios-tarde button:hover,
+.horarios-noche button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Iconos de horarios */
+.fas.fa-sun {
+  color: #ffc107;
+  font-size: 1.5rem;
+}
+
+.fas.fa-cloud-sun {
+  color: #0d6efd;
+  font-size: 1.5rem;
+}
+
+.fas.fa-moon {
+  color: #343a40;
+  font-size: 1.5rem;
+}
+
+/* Mapa */
+#mapaCancha {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Botón de reserva */
+#btnReservar {
+  transition: all 0.3s ease;
+}
+
+#btnReservar:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(40, 167, 69, 0.2);
+}
+
+#btnReservar:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.flatpickr-calendar {
+    width: 307px !important; /* Aumentamos ligeramente el ancho */
+}
+
+.flatpickr-days {
+    width: 307px !important;
+}
+
+.dayContainer {
+    min-width: 307px !important;
+    max-width: 307px !important;
+    width: 307px !important;
+}
+
+.flatpickr-day {
+    max-width: 39px !important;
+    height: 39px !important;
+    line-height: 39px !important;
+    margin: 0 2px 2px 0 !important;
+}
+
+/* Aseguramos que la abreviatura del domingo se muestre completa */
+span.flatpickr-weekday:first-child {
+    font-size: 90% !important; /* Reducimos ligeramente el tamaño de fuente */
+}
+
+.horarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px,1fr));
+  gap: .5rem;
+}
+.horario-btn {
+  padding: .75rem;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  cursor: pointer;
+  border-radius: .25rem;
+}
+.horario-btn.active {
+  background: var(--verde-principal);
+  color: #fff;
+  border-color: var(--verde-principal);
+}
+
